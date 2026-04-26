@@ -1,80 +1,143 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TipCalculator"
-    x:Class="TipCalculator.MainPage">
+    x:Class="TipCalculator.MainPage"
+    BackgroundColor="#FFF7FB">
 
-    <VerticalStackLayout Padding="40" Spacing="10">
-        <HorizontalStackLayout Spacing="10">
-            <Label
-                Text="Bill"
-                WidthRequest="100"
-                VerticalOptions="Center" />
-            <Entry
-                x:Name="billInput"
-                Placeholder="Enter Amount"
-                Keyboard="Numeric" />
-        </HorizontalStackLayout>
+    <ContentPage.Resources>
+        <Style x:Key="SectionTitleStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="#8A2D5A" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
 
-        <HorizontalStackLayout Margin="0,20,0,0" Spacing="10">
-            <Label
-                Text="Tip"
-                WidthRequest="100" />
-            <Label
-                x:Name="tipOutput"
-                Text="0.00" />
-        </HorizontalStackLayout>
+        <Style x:Key="ValueStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="#4A1F35" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
 
-        <HorizontalStackLayout Spacing="10">
-            <Label
-                Text="Total"
-                WidthRequest="100" />
-            <Label
-                x:Name="totalOutput"
-                Text="0.00" />
-        </HorizontalStackLayout>
+        <Style x:Key="SoftButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#F6CDE0" />
+            <Setter Property="TextColor" Value="#4A1F35" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
 
-        <HorizontalStackLayout VerticalOptions="End" Spacing="10">
-            <Label
-                Text="Tip Percentage"
-                WidthRequest="100" />
-            <Label
-                x:Name="tipPercent"
-                Text="15%" />
-        </HorizontalStackLayout>
+    <VerticalStackLayout Padding="24" Spacing="14">
+        <Label
+            Text="Tip Calculator"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="#8A2D5A" />
 
-        <Slider
-            x:Name="tipPercentSlider"
-            Minimum="0"
-            Maximum="100"
-            Value="15" />
+        <Border
+            Stroke="#E9A9C7"
+            StrokeThickness="1"
+            BackgroundColor="#FFFFFF"
+            StrokeShape="RoundRectangle 16"
+            Padding="16">
+            <VerticalStackLayout Spacing="12">
+                <Label
+                    Text="Bill Amount"
+                    Style="{StaticResource SectionTitleStyle}" />
+                <Entry
+                    x:Name="billInput"
+                    Placeholder="Enter amount"
+                    Keyboard="Numeric"
+                    ClearButtonVisibility="WhileEditing"
+                    BackgroundColor="#FFF2F8"
+                    TextColor="#4A1F35" />
+            </VerticalStackLayout>
+        </Border>
 
-        <HorizontalStackLayout Margin="0,20,0,0" Spacing="10">
-            <Button
-                Text="15%"
-                Clicked="OnNormalTip"
-                WidthRequest="150"
-                HorizontalOptions="Center" />
-            <Button
-                Text="20%"
-                Clicked="OnGenerousTip"
-                WidthRequest="150"
-                HorizontalOptions="Center" />
-        </HorizontalStackLayout>
+        <Border
+            Stroke="#E9A9C7"
+            StrokeThickness="1"
+            BackgroundColor="#FFFFFF"
+            StrokeShape="RoundRectangle 16"
+            Padding="16">
+            <VerticalStackLayout Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <Label Text="Tip" Style="{StaticResource SectionTitleStyle}" />
+                    <Label
+                        x:Name="tipOutput"
+                        Grid.Column="1"
+                        Text="$0.00"
+                        Style="{StaticResource ValueStyle}" />
 
-        <HorizontalStackLayout Margin="0,20,0,0" Spacing="10">
+                    <Label
+                        Grid.Row="1"
+                        Text="Total"
+                        Style="{StaticResource SectionTitleStyle}" />
+                    <Label
+                        x:Name="totalOutput"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="$0.00"
+                        Style="{StaticResource ValueStyle}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <Border
+            Stroke="#E9A9C7"
+            StrokeThickness="1"
+            BackgroundColor="#FFFFFF"
+            StrokeShape="RoundRectangle 16"
+            Padding="16">
+            <VerticalStackLayout Spacing="10">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label
+                        Text="Tip Percentage"
+                        Style="{StaticResource SectionTitleStyle}" />
+                    <Label
+                        x:Name="tipPercent"
+                        Grid.Column="1"
+                        Text="15%"
+                        Style="{StaticResource ValueStyle}" />
+                </Grid>
+
+                <Slider
+                    x:Name="tipPercentSlider"
+                    Minimum="0"
+                    Maximum="100"
+                    Value="15"
+                    ThumbColor="#D96B9A"
+                    MinimumTrackColor="#D96B9A"
+                    MaximumTrackColor="#F0D4E2" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button
+                        Grid.Column="0"
+                        Text="15%"
+                        Clicked="OnNormalTip"
+                        Style="{StaticResource SoftButtonStyle}" />
+                    <Button
+                        Grid.Column="1"
+                        Text="20%"
+                        Clicked="OnGenerousTip"
+                        Style="{StaticResource SoftButtonStyle}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
             <Button
                 x:Name="roundDown"
+                Grid.Column="0"
                 Text="Round Down"
-                WidthRequest="150"
-                HorizontalOptions="Center" />
+                Style="{StaticResource SoftButtonStyle}" />
             <Button
                 x:Name="roundUp"
+                Grid.Column="1"
                 Text="Round Up"
-                WidthRequest="150"
-                HorizontalOptions="Center" />
-        </HorizontalStackLayout>
+                Style="{StaticResource SoftButtonStyle}" />
+        </Grid>
     </VerticalStackLayout>
 
 </ContentPage>
